@@ -9,7 +9,6 @@ import {
 } from 'lucide-react';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { AdminSection } from './components/AdminSection';
-import { BottomDock } from './components/BottomDock';
 import { BrandLogo } from './components/BrandLogo';
 import { CartDrawer } from './components/CartDrawer';
 import { Header } from './components/Header';
@@ -191,29 +190,6 @@ export default function App() {
   const [lookupInput, setLookupInput] = useState('');
   const [lookupResult, setLookupResult] = useState<OrderRecord | null>(null);
   const [lookupSearched, setLookupSearched] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('kho-vat-pham');
-
-  useEffect(() => {
-    const sectionIds = ['thong-bao', 'kho-vat-pham', 'admin', 'chuyen-khoan', 'ho-so'];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible.length > 0) {
-          setActiveSection(visible[0].target.id);
-        }
-      },
-      { rootMargin: '-25% 0px -45% 0px', threshold: [0.1, 0.25, 0.5] }
-    );
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     try {
@@ -831,7 +807,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0D10] text-[#F4F5F7] flex flex-col pb-14">
+    <div className="min-h-screen bg-[#0B0D10] text-[#F4F5F7] flex flex-col">
       <Header
         cartCount={totalCartCount}
         isAdmin={isAdmin}
@@ -840,12 +816,8 @@ export default function App() {
 
       <main className="flex-1">
         {/* STOREFRONT HERO SPLIT */}
-        <section className="relative overflow-hidden pt-8 sm:pt-12 lg:pt-14 pb-10">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_50%_at_80%_10%,rgba(245,158,11,0.09),transparent_65%)]"
-          />
-          <div className="relative max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12">
+        <section className="pt-8 sm:pt-12 lg:pt-14 pb-8">
+          <div className="max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
               <div className="lg:col-span-5 flex flex-col justify-between py-2">
                 <div>
@@ -865,13 +837,13 @@ export default function App() {
                 <div className="mt-8 lg:mt-10 flex flex-wrap items-center gap-3.5">
                   <a
                     href="#kho-vat-pham"
-                    className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-[#0B0D10] bg-[#F59E0B] hover:bg-[#D97706] rounded-md shadow-[0_6px_20px_rgba(245,158,11,0.2)] transition-all duration-150 whitespace-nowrap shrink-0"
+                    className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-[#0B0D10] bg-[#F59E0B] hover:bg-[#D97706] rounded-md transition-colors whitespace-nowrap shrink-0"
                   >
                     Xem kho vật phẩm
                   </a>
                   <a
                     href="#chuyen-khoan"
-                    className="inline-flex items-center gap-1.5 px-5 py-3 text-sm font-semibold text-[#F4F5F7] bg-[#191D26] hover:bg-[#232833] border border-[#2D3544] rounded-md transition-colors duration-150 whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1.5 px-5 py-3 text-sm font-semibold text-[#F4F5F7] bg-[#191D26] hover:bg-[#232833] border border-[#262C38] rounded-md transition-colors whitespace-nowrap shrink-0"
                   >
                     <span>Nạp Số dư & Thẻ Garena</span>
                     <ArrowDownRight className="w-4 h-4" />
@@ -880,36 +852,20 @@ export default function App() {
               </div>
 
               <div className="lg:col-span-7">
-                <div className="relative w-full h-full min-h-[280px] sm:min-h-[380px] lg:min-h-[440px] rounded-xl overflow-hidden border border-[#2D3544] shadow-[0_24px_48px_rgba(0,0,0,0.45)]">
+                <div className="w-full h-full min-h-[280px] sm:min-h-[380px] lg:min-h-[440px] rounded-xl overflow-hidden border border-[#262C38]">
                   <ResilientImage
                     src={HERO_BANNER.image}
                     alt={HERO_BANNER.alt}
                     fallbackTitle="Kho Trang Bị Free Fire"
                     className="w-full h-full"
                   />
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0B0D10]/90 via-[#0B0D10]/20 to-transparent"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-[#CBD0D8]">
-                      <span className="font-mono font-semibold text-[#F59E0B]">OB55</span>
-                      <span aria-hidden="true">·</span>
-                      <span>Kho trang bị chính thức</span>
-                      <span aria-hidden="true">·</span>
-                      <span>Giao nhanh qua UID</span>
-                    </div>
-                    <span className="font-mono text-xs text-[#9BA3B0] tabular-nums">
-                      ZaloPay {BANK_TRANSFER_INFO.accountNumber}
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
 
             {/* 4-Column Operational Utility Strip */}
-            <div className="mt-10 bg-[#13161C]/60 border border-[#262C38] rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#262C38] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-              <div className="p-4 sm:p-5">
+            <div className="mt-10 border-y border-[#262C38] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#262C38]">
+              <div className="py-4 sm:pr-6">
                 <p className="text-xs text-[#9BA3B0]">Số dư tài khoản</p>
                 <div className="mt-1 flex items-center justify-between gap-2">
                   <span className="font-mono text-sm font-bold tabular-nums text-[#F59E0B]">
@@ -923,19 +879,19 @@ export default function App() {
                   </a>
                 </div>
               </div>
-              <div className="p-4 sm:p-5">
+              <div className="py-4 sm:px-6">
                 <p className="text-xs text-[#9BA3B0]">Kho hàng hiện tại</p>
                 <p className="mt-1 text-sm font-semibold tabular-nums text-[#F4F5F7]">
                   {allItems.length} vật phẩm đang mở bán
                 </p>
               </div>
-              <div className="p-4 sm:p-5">
+              <div className="py-4 sm:px-6">
                 <p className="text-xs text-[#9BA3B0]">Số điện thoại · ZaloPay</p>
                 <p className="mt-1 text-sm font-mono font-semibold tabular-nums text-[#F4F5F7]">
                   {BANK_TRANSFER_INFO.accountNumber}
                 </p>
               </div>
-              <div className="p-4 sm:p-5">
+              <div className="py-4 sm:pl-6">
                 <p className="text-xs text-[#9BA3B0]">Chủ tài khoản quản lý</p>
                 <p className="mt-1 text-sm font-semibold text-[#F4F5F7]">
                   {BANK_TRANSFER_INFO.accountName}
@@ -944,10 +900,10 @@ export default function App() {
             </div>
 
             {/* Prominent Brand Emblem Logo Placed Right Below the Phone Row */}
-            <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-6 py-5 px-5 sm:px-8 bg-[#13161C] border border-[#262C38] rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-6 py-6 px-6 sm:px-8 bg-[#13161C] border border-[#262C38] rounded-xl">
               <BrandLogo variant="prominent" />
-              <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 text-xs text-[#9BA3B0]">
-                <div className="flex items-center gap-2 pr-1">
+              <div className="flex flex-wrap items-center gap-4 text-xs text-[#9BA3B0]">
+                <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-[#F59E0B]" />
                   <span>
                     Hotline & ZaloPay:{' '}
@@ -958,7 +914,7 @@ export default function App() {
                 </div>
                 <a
                   href="#ho-so"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-[#F4F5F7] bg-[#191D26] hover:bg-[#232833] border border-[#262C38] hover:border-[#3A4354] rounded-md transition-colors whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-[#F4F5F7] bg-[#191D26] hover:bg-[#232833] border border-[#262C38] rounded-md transition-colors whitespace-nowrap"
                 >
                   <span>
                     {currentViewerAccount
@@ -968,7 +924,7 @@ export default function App() {
                 </a>
                 <a
                   href="#admin"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-[#F4F5F7] bg-[#191D26] hover:bg-[#232833] border border-[#262C38] hover:border-[#3A4354] rounded-md transition-colors whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-[#F4F5F7] bg-[#191D26] hover:bg-[#232833] border border-[#262C38] rounded-md transition-colors whitespace-nowrap"
                 >
                   <Lock className="w-3.5 h-3.5 text-[#F59E0B]" />
                   <span>{isAdmin ? 'Mở Bảng Admin' : 'Đăng nhập Quyền Admin'}</span>
@@ -1432,19 +1388,6 @@ export default function App() {
         onRemoveItem={handleRemoveCartItem}
         onGoToTopUp={handleGoToTopUp}
         onCheckoutSuccess={handleCheckoutSuccess}
-      />
-
-      <BottomDock
-        categories={CATEGORY_TABS}
-        activeCategory={activeCategory}
-        activeSection={activeSection}
-        itemCount={allItems.length}
-        savedCount={savedIds.length}
-        cartCount={totalCartCount}
-        walletBalance={walletBalance}
-        isAdmin={isAdmin}
-        onSelectCategory={(cat) => setActiveCategory(cat)}
-        onOpenCart={() => setCartDrawerOpen(true)}
       />
     </div>
   );

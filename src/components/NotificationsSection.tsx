@@ -79,11 +79,11 @@ export function NotificationsSection({
             </p>
           </div>
         ) : (
-          <div className="mt-8 bg-[#13161C] border border-[#262C38] rounded-xl divide-y divide-[#262C38] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] overflow-hidden">
+          <div className="mt-8 bg-[#13161C] border border-[#262C38] rounded-xl divide-y divide-[#262C38]">
             {sortedAnnouncements.map((item) => (
               <article
                 key={item.id}
-                className="p-6 sm:p-7 flex flex-col sm:flex-row sm:items-start justify-between gap-4 hover:bg-[#161A22] transition-colors duration-150"
+                className="p-6 sm:p-7 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
               >
                 <div className="space-y-2 max-w-3xl">
                   <div className="flex flex-wrap items-center gap-2 text-xs text-[#9BA3B0]">

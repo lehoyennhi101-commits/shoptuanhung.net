@@ -35,7 +35,7 @@ export function BrandLogo({ variant = 'prominent' }: BrandLogoProps) {
   }
 
   return (
-    <div className="inline-flex items-center gap-4 px-6 py-4 bg-gradient-to-br from-[#171B24] to-[#101319] border border-[#2D3544] rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_12px_28px_rgba(0,0,0,0.35)]">
+    <div className="inline-flex items-center gap-4 px-6 py-4 bg-[#13161C] border border-[#262C38] rounded-xl shadow-lg">
       <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
         <svg
           className="w-14 h-14"

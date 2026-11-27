@@ -20,8 +20,8 @@ export function Header({ cartCount, isAdmin, onOpenCart }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0B0D10]/92 backdrop-blur-xl border-b border-[#262C38]/90">
-      <div className="max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12 h-14 flex items-center justify-between gap-8">
+    <header className="sticky top-0 z-40 bg-[#0B0D10]/95 backdrop-blur-md border-b border-[#262C38]">
+      <div className="max-w-[1360px] mx-auto px-5 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-8">
         {/* Zone 1: Single-line Brand Wordmark */}
         <a
           href="#"
